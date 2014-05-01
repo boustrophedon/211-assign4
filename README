@@ -1,0 +1,5 @@
+The 4th assignment for CS211, Computer Architecture. 
+
+We have to simulate a CPU's L1 cache in C, taking a variety of parameters (c-sim [-h] <cache size> <assoc> <block size> <write policy> <trace file>) specified in the assignment to simulate different kinds of cache paradigms.
+
+This should be fun, considering I missed the first lecture on this and we only had two or three of them in total.
