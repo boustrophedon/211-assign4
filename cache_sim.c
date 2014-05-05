@@ -3,13 +3,7 @@
 #include <string.h>
 
 #include "cache_sim.h"
-
-// these should probably go in a header...
-#define DIRECT -1
-#define FULL_ASSOC 0
-
-#define WRITEBACK 0
-#define WRITETHRU 1
+#include "cache_util.h"
 
 int cache_size;
 int assoc;
@@ -18,8 +12,9 @@ int write_policy;
 
 char *tfile_name;
 
-// no error checking because the assignment said they wouldn't give us bad inputs
-// though normally i'd use an actual library to do this. sigh.
+Cache cache;
+
+// wouldn't it be nice to have a library to do this for me. sigh.
 void parse_arguments(char *argv[]) {
 	cache_size = atoi(argv[1]);
 
@@ -50,15 +45,52 @@ void parse_arguments(char *argv[]) {
 	strcpy(tfile_name, argv[5]);
 }
 
+void parse_file(char *text) {
+	size_t pos = 0;
+	char *line = get_next_line(text, &pos);
+	while (line != NULL) {
+		if (line == NULL) {
+			break;
+		}
+		else if (strcmp(line, "#eof") == 0) {
+			free(line);
+			break;
+		}
+		else {
+			parse_line(line);
+			free(line);
+			line = NULL;
+			line = get_next_line(text, &pos);
+		}
+	}
+	return;
+}
+
+void parse_line(char *line) {
+	int pc;
+	char wr;
+	int loc;
+	sscanf(line, "%x: %c %x", &pc, &wr, &loc);
+	printf("%x\n", loc);
+	return;
+}
+
 int main(int argc, char *argv[]) {
-
-	if (strcmp(argv[1], "-h") == 0) {
-		printf("Help text goes here\n");
+	if (argc == 2) {
+		if (strcmp(argv[1], "-h") == 0) {
+			printf("Help text goes here\n");
+			return 0;
+		}
 	}
-	else {
-		parse_arguments(argv);
+	else if (argc != 6) {
+		printf("Incorrect number of arguments.\n");
+		return -1;
 	}
-	printf("%d %d %d %d %s\n", cache_size, assoc, block_size, write_policy, tfile_name);
 
+	parse_arguments(argv);
+	char *text = read_file(tfile_name);
+	parse_file(text);
+
+	free(text);
 	return 0;
 }

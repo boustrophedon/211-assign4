@@ -42,7 +42,7 @@ read memory:
 	if there, cache hit
 	if not, cache miss
 		memory read
-		if cache line with valid bit == 0
+		if there is a cache line with valid bit == 0
 			set that valid bit = 1
 		else:
 			find lru line
