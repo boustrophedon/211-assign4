@@ -1,0 +1,55 @@
+DO NOT TREAT THIS AS DOCUMENTATION. this is basically a scratchpad for notes and will most likely diverge from the code after a while
+
+parse options
+	if argv[1] == '-h':
+		print help text
+		exit
+	else:
+
+argv[1]
+cache size -> atoi
+
+argv[2]	
+associativity ( direct / assoc / assoc:n) -> check and set some flags or something, parse assoc:n
+
+argv[3]
+block size -> atoi
+	
+argv[4]
+write policy -> check wt or wb, set flag
+
+argv[5]
+trace file -> open,read
+
+
+create cache from options
+	???
+	we have the cache itself
+	sets in cache 
+	cache lines in set
+	and then cache lines have valid bits, tag, actual data
+
+
+open file
+parse line by line?
+sscanf
+
+read memory:
+	parse set index
+	parse tag
+	get cache_set from cache
+	look for tag in cache_set
+	if there, cache hit
+	if not, cache miss
+		memory read
+		if cache line with valid bit == 0
+			set that valid bit = 1
+		else:
+			find lru line
+			if writeback and line is dirty
+				memory write
+				set dirty bit to clean
+		update tag
+
+
+	update lru counter w/ pc?

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cache_sim.h"
+
 // these should probably go in a header...
 #define DIRECT -1
 #define FULL_ASSOC 0
