@@ -34,6 +34,28 @@ open file
 parse line by line?
 sscanf
 
+
+initializing cache:
+	number of cache lines = cache size/block size
+
+	number of sets = # of lines if direct mapped
+	number of sets = 1 if fully associative
+	number of sets = lines/assoc if assoc>0
+
+I was thinking about the set/tag wrong
+the number of sets is correct, but the tag is just whatever is leftover in the memory address after you remove the block offset bits and the set bits
+
+set mask bits = log2(#sets)
+tag mask bits = log2(memory address) - (log2(#sets) + log2(block size))
+don't need the tag mask bits.
+
+set mask = block offset:
+
+to parse the tag and set indices:
+set index = mem_loc/block_offset % (number of sets)
+
+tag = mem_loc/tag_mask
+
 read memory:
 	parse set index
 	parse tag

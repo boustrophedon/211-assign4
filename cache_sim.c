@@ -3,6 +3,8 @@
 #include <string.h>
 
 #include "cache_sim.h"
+#include "cache_init.h"
+#include "cache_ops.h"
 #include "cache_util.h"
 
 int cache_size;
@@ -12,7 +14,7 @@ int write_policy;
 
 char *tfile_name;
 
-Cache cache;
+Cache *global_cache; // this is dumb but I have a deadline so whatever. 
 
 // wouldn't it be nice to have a library to do this for me. sigh.
 void parse_arguments(char *argv[]) {
@@ -71,7 +73,6 @@ void parse_line(char *line) {
 	char wr;
 	int loc;
 	sscanf(line, "%x: %c %x", &pc, &wr, &loc);
-	printf("%x\n", loc);
 	return;
 }
 
@@ -89,8 +90,17 @@ int main(int argc, char *argv[]) {
 
 	parse_arguments(argv);
 	char *text = read_file(tfile_name);
+	if (text == NULL) {
+		printf("exiting.\n");
+		return -1;
+	}
+
+	global_cache = cache_create();
+
 	parse_file(text);
 
+	cache_delete(global_cache);
+	free(tfile_name);
 	free(text);
 	return 0;
 }
