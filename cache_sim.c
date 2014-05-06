@@ -73,6 +73,17 @@ void parse_line(char *line) {
 	char wr;
 	int loc;
 	sscanf(line, "%x: %c %x", &pc, &wr, &loc);
+
+	if (wr == 'W') {
+		cache_write(global_cache, pc, loc);
+	}
+	else if (wr == 'R') {
+		cache_read(global_cache, pc, loc);
+	}
+	else {
+		printf("problems.\n");
+	}
+
 	return;
 }
 

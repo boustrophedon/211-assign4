@@ -70,9 +70,18 @@ void compute_masks(Cache *cache) {
 	return;
 }
 
-int extract_set_index(Cache *cache, int addr) {
-	return (int)(addr/cache->set_mask)%(int)(cache->num_sets);
+size_t extract_set_index(Cache *cache, int addr) {
+	return (size_t)(addr/cache->set_mask)%(cache->num_sets);
 }
 int extract_tag(Cache *cache, int addr) {
 	return (addr/cache->tag_mask);
 }
+size_t get_line_index(cache_set *set, int tag) {
+    for (size_t i = 0; i < set->capacity; i++) {
+        if (set->lines[i].tag == tag) {
+            return i;
+        }
+    }
+    return set->capacity+1;
+}
+

@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-g -std=c99 -Wall -Werror -Weverything -Wno-padded -Wno-bad-function-cast
+CFLAGS=-g -std=c99 -Wall -Werror -Weverything -Wno-padded -Wno-bad-function-cast -Wno-unused-parameter
 LDFLAGS=-g -lm
 
 all: c-sim

@@ -75,3 +75,8 @@ read memory:
 
 
 	update lru counter w/ pc?
+
+write memory:
+	parse set index
+	parse tag
+	
