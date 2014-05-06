@@ -29,6 +29,11 @@ Cache *cache_create() {
 	new_cache->block_size = block_size;
 	new_cache->write_policy = write_policy;
 	new_cache->num_sets = num_sets;
+
+	new_cache->cache_hits = 0;
+	new_cache->cache_misses = 0;
+	new_cache->memory_reads = 0;
+	new_cache->memory_writes = 0;
 	
 	new_cache->sets = malloc(sizeof(cache_set)*num_sets);
 	for (size_t i = 0; i < num_sets; i++) {

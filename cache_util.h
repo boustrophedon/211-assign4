@@ -14,4 +14,7 @@ int extract_tag(Cache *cache, int addr);
 
 size_t get_line_index(cache_set *set, int tag); 
 
+size_t find_empty_line(cache_set *set);
+size_t find_lowest_lru_line(cache_set *set);
+
 #endif

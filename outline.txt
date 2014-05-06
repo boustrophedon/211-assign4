@@ -56,7 +56,7 @@ set index = mem_loc/block_offset % (number of sets)
 
 tag = mem_loc/tag_mask
 
-read memory:
+read cache:
 	parse set index
 	parse tag
 	get cache_set from cache
@@ -73,10 +73,33 @@ read memory:
 				set dirty bit to clean
 		update tag
 
+	update lru counter w/ pc
 
-	update lru counter w/ pc?
-
-write memory:
+write cache:
 	parse set index
 	parse tag
-	
+	get cache_set from cache
+	look for tag in cache_set
+	if there, cache hit
+		cache write
+		if writethrough
+			memory write
+		if writeback
+			change tag
+			set dirty bit
+	if not, cache miss
+		memory read
+		if there is a cache line with valid bit == 0
+			set that valid bit = 1
+			set tag
+			set lru
+			set dirty bit XXX if writeback we wouldn't write immediately
+		if not:
+			find lru line
+			if writeback and line is dirty
+				memory write
+				set dirty bit = 1
+			else
+				memory write
+			update tag
+			

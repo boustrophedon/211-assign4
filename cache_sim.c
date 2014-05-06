@@ -90,7 +90,7 @@ void parse_line(char *line) {
 int main(int argc, char *argv[]) {
 	if (argc == 2) {
 		if (strcmp(argv[1], "-h") == 0) {
-			printf("Help text goes here\n");
+			printf("c-sim [-h] <cache size> <assoc> <block size> <write policy> <trace file>\n");
 			return 0;
 		}
 	}
@@ -109,6 +109,11 @@ int main(int argc, char *argv[]) {
 	global_cache = cache_create();
 
 	parse_file(text);
+
+	printf("Cache hits: %d \n", global_cache->cache_hits);
+	printf("Cache misses: %d \n", global_cache->cache_misses);
+	printf("Memory reads: %d \n", global_cache->memory_reads);
+	printf("Memory writes: %d \n", global_cache->memory_writes);
 
 	cache_delete(global_cache);
 	free(tfile_name);

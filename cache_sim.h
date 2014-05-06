@@ -31,6 +31,12 @@ typedef struct cache_ {
 	size_t num_sets;
 	int set_mask; // not actually masks in the sense that we bitwise and
 	int tag_mask; // but they serve the same purpose. we just do integer division.
+	
+	int cache_hits;
+	int cache_misses;
+	int memory_reads;
+	int memory_writes;
+
 } Cache;
 
 

@@ -82,6 +82,29 @@ size_t get_line_index(cache_set *set, int tag) {
             return i;
         }
     }
-    return set->capacity+1;
+    return (set->capacity)+1;
 }
+
+size_t find_empty_line(cache_set *set) {
+	for (size_t i = 0; i< set->capacity; i++) {
+		if (set->lines[i].valid == 0) {
+			return i;
+		}
+	}
+	return (set->capacity)+1;
+}
+
+size_t find_lowest_lru_line(cache_set *set) {
+	int lowest = set->lines[0].lru_counter;
+	size_t cur = 0;
+	for (size_t i = 0; i< set->capacity; i++) {
+		cache_line line = set->lines[i];
+		if (line.lru_counter < lowest) {
+			lowest = line.lru_counter;
+			cur = i;
+		}
+	}
+	return cur;
+}
+	
 
